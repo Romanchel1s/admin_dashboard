@@ -5,7 +5,7 @@ import mockApi from './mocks';
 const USE_MOCK_API = true;
 
 const apiClient = axios.create({
-  baseURL: 'https://api.yourcompany.com/v1',
+  baseURL: 'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -80,7 +80,7 @@ const EmployeeManagerPage: React.FC = () => {
           />
         {employes.length > 0? <Autocomplete
             options={employes}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.username}
             renderInput={(params) => <TextField {...params} label="Выберите сотрудника" />}
             onChange={handleEmployeeChange}
             value={selectedEmployee}
