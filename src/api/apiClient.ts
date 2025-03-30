@@ -2,7 +2,7 @@ import axios from 'axios';
 import mockApi from './mocks';
 
 // Toggle between real and mock APIs
-const USE_MOCK_API = true;
+const USE_MOCK_API = false;
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:8000',
@@ -38,8 +38,26 @@ const api = {
     USE_MOCK_API
       ? mockApi.getEmployeeSchedule(employeeId)
       : apiClient
-          .get(`/employees/${employeeId}/schedule`)
+          .get(`/employees/${employeeId}/Attendance`)
           .then(res => res.data),
+  getAllProducts: () => 
+    apiClient.get('/product/all_products').then(res => res.data),
+
+  getAllStores: async () => {
+    const response = await fetch('/api/upload/bot/map.json');
+    if (!response.ok) {
+    throw new Error('Network response was not ok');
+    }
+    const jsonData = await response.json();
+    const stores = jsonData.map((store: { id: unknown; name: unknown; }, index: unknown) => ({
+        id: store.id || index,
+        name: store.name || 'unknown',
+    }));
+    return stores
+  },
+  getProductsByTime:(storeId: string, startTime: string, endTime: string) =>
+    apiClient.get(`/stores/${storeId}/products/products_available/${startTime}/${endTime}`).then(res => res.data),
+  getProduct: (id: string) => apiClient.get(`/product/${id}`).then(res => res.data),
 };
 
 export default api;

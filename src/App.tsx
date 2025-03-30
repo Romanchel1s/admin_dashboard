@@ -8,6 +8,8 @@ import CredentialsSignInPage from './pages/SignIn';
 import { CircularProgress } from '@mui/material';
 import { Session } from '@supabase/supabase-js';
 import supabase from './api/supabaseClient';
+import ProductManagmentPage from './pages/ProductManagmentPage';
+import ProductNavigationPage from './pages/ProductNavigationPage';
 
 const App: React.FC = () => {
 
@@ -15,13 +17,11 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Получаем текущую сессию
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setLoading(false);
     });
 
-    // Подписываемся на изменения авторизации
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
@@ -30,8 +30,7 @@ const App: React.FC = () => {
       authListener.subscription.unsubscribe();
     };
   }, []);
-
-  console.log(session);
+  
   
   if (loading) return <CircularProgress />;
 
@@ -42,6 +41,8 @@ const App: React.FC = () => {
         <Route path="/" element={session? <Dashboard />: <Navigate to="/signin" />} />
         <Route path="/signin" element={<CredentialsSignInPage />} />
         <Route path="/employee-management" element={session? <EmployeeManagerPage />: <Navigate to="/signin" />} />
+        <Route path="/product-management" element={session? <ProductNavigationPage />: <Navigate to="/signin" />} />
+        <Route path="/products" element={session? <ProductManagmentPage />: <Navigate to="/signin" />} />
       </Routes>
     </Router>
   );
