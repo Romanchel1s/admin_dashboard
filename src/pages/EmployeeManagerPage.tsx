@@ -42,10 +42,11 @@ const EmployeeManagerPage: React.FC = () => {
       setEmployees(data);
     }
 
+
     const getEmployeeSchedule = async () => {
       if (selectedEmployee === null) return;
       const data = await api.getEmployeeSchedule(selectedEmployee.user_id.toString());
-      setSchedule(data.schedule);
+      setSchedule(data);
     }
 
     useEffect(() => {
@@ -83,7 +84,7 @@ const EmployeeManagerPage: React.FC = () => {
             onChange={handleEmployeeChange}
             value={selectedEmployee}
           />: null }
-        {selectedEmployee ? <WorkSchedule schedule={schedule} /> : null}
+        {selectedEmployee ? <WorkSchedule attendanceData={schedule} /> : null}
         </Stack>
       </>
     );

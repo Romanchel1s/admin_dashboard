@@ -78,7 +78,7 @@ const ProductManagementPage = () => {
         setLoading(true);
         try {
             const response = await api.getProductsByTime(
-                selectedStore?.id.toString() || "",
+                "522",
                 startTime.format("YYYY-MM-DDTHH:mm:ss"),
                 endTime.format("YYYY-MM-DDTHH:mm:ss")
             );
