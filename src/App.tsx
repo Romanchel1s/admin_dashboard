@@ -10,6 +10,7 @@ import { Session } from '@supabase/supabase-js';
 import supabase from './api/supabaseClient';
 import ProductManagmentPage from './pages/ProductManagmentPage';
 import ProductNavigationPage from './pages/ProductNavigationPage';
+import StoreStatsPage from './pages/StoreStatsPage';
 
 const App: React.FC = () => {
 
@@ -43,6 +44,7 @@ const App: React.FC = () => {
         <Route path="/employee-management" element={session? <EmployeeManagerPage />: <Navigate to="/signin" />} />
         <Route path="/product-management" element={session? <ProductNavigationPage />: <Navigate to="/signin" />} />
         <Route path="/products" element={session? <ProductManagmentPage />: <Navigate to="/signin" />} />
+        <Route path="/store-management" element={session? <StoreStatsPage />: <Navigate to="/signin" />} />
       </Routes>
     </Router>
   );

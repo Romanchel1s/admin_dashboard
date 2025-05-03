@@ -9,9 +9,10 @@ import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import AttendanceStatsByDate from "../api/models/attendanceStatsByDate";
 import FlattenedAttendanceRow from "../api/models/flattenedAttendanceRow";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeManagerPage: React.FC = () => {
-
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
@@ -87,9 +88,24 @@ const EmployeeManagerPage: React.FC = () => {
             <Typography variant="h5">Выберите временной интервал</Typography>
             <DateTimePicker label="Начало" value={startTime} onChange={setStartTime} />
             <DateTimePicker label="Конец" value={endTime} onChange={setEndTime} />
-            <Button variant="contained" color="primary" onClick={handleGetStoresAttendance}>
-              Получить статистику посещаемости магазинов
-            </Button>
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleGetStoresAttendance}
+                sx={{ flex: 2 }}
+              >
+                Получить статистику посещаемости магазинов
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => navigate("/store-management")}
+                sx={{ flex: 1 }}
+              >
+                Посмотреть статистику конкретного магазина
+              </Button>
+            </Stack>
             
 
             <Autocomplete
