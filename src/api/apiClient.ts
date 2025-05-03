@@ -55,6 +55,12 @@ const api = {
     }));
     return stores
   },
+  getStoreAttendanceStats: async(storeId: string, startTime: string, endTime: string) => {
+    apiClient.get(`/stores/${storeId}/attendance_stat/${startTime}/${endTime}`).then(res => res.data)
+  },
+  getStoresAttendance: async(startTime: string, endTime: string) => {
+    return apiClient.get(`/stores/nearest/${startTime}/${endTime}`).then(res => res.data)
+  },
   getProductsByTime:(storeId: string, startTime: string, endTime: string) =>
     apiClient.get(`/stores/${storeId}/products/products_available/${startTime}/${endTime}`).then(res => res.data),
   getProduct: (id: string) => apiClient.get(`/product/${id}`).then(res => res.data),
