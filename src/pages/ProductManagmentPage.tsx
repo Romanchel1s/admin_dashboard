@@ -8,6 +8,7 @@ import api from "../api/apiClient";
 import Product from "../api/models/product";
 import ProductInfo from "../api/models/productInfo";
 import Store from "../api/models/store";
+import StoreSettingsModal from "../components/UpdateCheckModal";
 
 const fetchProductName = async (id: string): Promise<ProductInfo> => {
     try {
@@ -32,6 +33,7 @@ const ProductManagementPage = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchNames = async () => {
@@ -151,7 +153,10 @@ const ProductManagementPage = () => {
                     <Typography variant="h5">Выберите временной интервал</Typography>
                     <DateTimePicker label="Начало" value={startTime} onChange={setStartTime} />
                     <DateTimePicker label="Конец" value={endTime} onChange={setEndTime} />
-                    <Button variant="contained" onClick={fetchProducts}>Собрать статистику</Button>
+                    <Stack direction="row" spacing={2}>
+                    <Button variant="contained" onClick={fetchProducts} sx={{flex: 2}}>Собрать статистику</Button>
+                    <Button variant="contained" color="secondary" onClick={() => setSettingsModalOpen(true)} sx={{flex: 1}}>Изменить периодичности проверки</Button>
+                    </Stack>
                     {loading && <CircularProgress />}
                     {error && <Typography color="error">{error}</Typography>}
                     {products.length > 0 && (
@@ -165,6 +170,18 @@ const ProductManagementPage = () => {
                     )}
                 </>
                 :<Typography color="error">Выберите магазин</Typography>}
+                {selectedStore && (
+                <StoreSettingsModal
+                    open={settingsModalOpen}
+                    onClose={() => setSettingsModalOpen(false)}
+                    storeId={selectedStore.id.toString()}
+                    updateStoreCheckSettings={api.updateStoreCheckSettings}
+                    onSuccess={() => {
+                    // тут можно показать Snackbar или обновить данные
+                    console.log("Настройки успешно обновлены");
+                    }}
+                />
+                )}
             </Stack>
         </LocalizationProvider>
     );

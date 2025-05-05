@@ -64,6 +64,8 @@ const api = {
   getProductsByTime:(storeId: string, startTime: string, endTime: string) =>
     apiClient.get(`/stores/${storeId}/products/products_available/${startTime}/${endTime}`).then(res => res.data),
   getProduct: (id: string) => apiClient.get(`/product/${id}`).then(res => res.data),
+  updateStoreCheckSettings: (storeId: string, settings: { daily_checks_count: number; daily_checks_interval: number; }) =>
+    apiClient.put(`/stores/${storeId}/update_daily_checks`, settings).then(res => res.data),
 };
 
 export default api;

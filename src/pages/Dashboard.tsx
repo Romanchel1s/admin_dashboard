@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
             }}
           >
             <Link 
-              to="/product-management" 
+              to="/products" 
               style={{ 
                 textDecoration: 'none', 
                 color: '#007bff', 
