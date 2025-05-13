@@ -75,12 +75,14 @@ const ProductManagementPage = () => {
         fetchStores();
     }, []);
 
+    console.log(selectedStore);
+
     const fetchProducts = async () => {
         if (!startTime || !endTime) return;
         setLoading(true);
         try {
             const response = await api.getProductsByTime(
-                "522",
+                selectedStore?.id.toString() || "",
                 startTime.format("YYYY-MM-DDTHH:mm:ss"),
                 endTime.format("YYYY-MM-DDTHH:mm:ss")
             );

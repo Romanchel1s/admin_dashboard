@@ -3,9 +3,10 @@ import mockApi from './mocks';
 
 // Toggle between real and mock APIs
 const USE_MOCK_API = false;
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: baseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
